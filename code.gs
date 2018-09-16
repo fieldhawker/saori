@@ -5,7 +5,8 @@ function doPost(e) {
   var bot_name     = PropertiesService.getScriptProperties().getProperty('BOT_NAME');
   var bot_icon     = PropertiesService.getScriptProperties().getProperty('BOT_ICON');
   var verify_token = PropertiesService.getScriptProperties().getProperty('VERIFY_TOKEN');
-  var len_trigger  = 'saori:'.length;
+  
+  Logger.log("token: " + e.parameter.token);
   
   // 投稿の認証
   if (verify_token != e.parameter.token) {
@@ -15,7 +16,7 @@ function doPost(e) {
   var app = SlackApp.create(token);
   
   //Trigger Words部分の削除
-  var text = e.parameter.text.substr(len_trigger);
+  var text = e.parameter.text.replace('saori:', '');
   
   // 出力メッセージ
   var message = '';
@@ -23,36 +24,52 @@ function doPost(e) {
   if (text.match(/おはよう/)) {
       message = "おはようございます。今日もお仕事頑張りましょう！";
       
+  } else if (text.match(/ぬるぽ/)) {
+      message = "<@" + e.parameter.user_name + ">\n" + "ガッ";
+      
   } else if (text.match(/weather:/)) {
       result_message = getWeather();
       message = "<@" + e.parameter.user_name + ">\n" + result_message;
       
   } else if (text.match(/codec:/)) {
-      result_message = executeCodec(text.substr("codec:".length).trim());
+      result_message = executeCodec(text.replace("codec:", "").trim());
       message = "<@" + e.parameter.user_name + ">\n" + result_message;
       
-  } else if (text.match(/praise:/)) {
-      result_message = text.substr("praise:".length).trim();
-      var words = ['素敵です！', 'かっこいい～～！', 'さすがですね！', 'やっぱ違うわぁ～！'];
-      var random = Math.floor( Math.random() * words.length );
-      message = result_message + 'さん！' + words[random];
+  } else if (text.match(/dice:/)) {
+      result_message = executeDice(text.replace("dice:", "").trim());
+      message = "<@" + e.parameter.user_name + ">\n" + result_message;
       
+  } else if (text.match(/iine:/)) {
+      result_message = getIine(text.replace("iine:", "").trim());
+      message = result_message;
+      
+  } else if (text.match(/waruine:/)) {
+      result_message = getWaruine(text.replace("waruine:", "").trim());
+      message = result_message;
+       
   } else if (text.match(/image:/)) {
-      result_message = getSearchImage(text.substr("image:".length).trim());
+      result_message = getSearchImage(text.replace("image:", "").trim());
       message = "<@" + e.parameter.user_name + ">\n" + result_message;
       
   } else if (text.match(/talk:/)) {
-      result_message = getDialogueMessage(text.substr("talk:".length).trim());
-      message = "<@" + e.parameter.user_name + ">\n" + result_message;      
+      result_message = getDialogueMessage(text.replace("talk:", "").trim());
+      message = "<@" + e.parameter.user_name + ">\n" + result_message;
+      
+  } else if (text.match(/21:/)) {
+      result_message = "https://script.google.com/macros/s/AKfycbwI7Ye7jN-Fi82zHcXcLG80tDn7n8fcgcCWmiIRnlePe9PgN6Q1/exec";
+      message = "<@" + e.parameter.user_name + ">\n" + result_message;
       
   } else if (text.match(/help:/)) {
       message = "<@" + e.parameter.user_name + ">\n"
         + '現在使用できるコマンドは以下になります。\n'
         + '[ weather: ] 千代田区の天気を教えてくれます。\n'
         + '[ codec:(文字列) ] (文字列)をプログラムでよく使用される英単語に変換してくれます。\n'
-        + '[ praise:(@名前) ] (@名前)を褒めてくれます。\n'
+        + '[ dice: ] サイコロを振ってくれます。\n'
+        + '[ iine:(@名前) ] (@名前)を褒めてくれます。\n'
+        + '[ waruine:(@名前) ] (@名前)を貶してくれます。\n'
         + '[ image:(文字列) ] (文字列)で画像検索します。\n'
         + '[ talk:(文字列) ] (文字列)でBOTに話しかけます。\n'
+        + '[ 21: ] 二課１ＧのポータルサイトＵＲＬをお知らせします。\n'
         + '[ help: ] 使用可能なコマンドが確認できます。\n'
       ;
   } else {
