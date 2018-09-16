@@ -31,8 +31,16 @@ function doPost(e) {
       result_message = getWeather();
       message = "<@" + e.parameter.user_name + ">\n" + result_message;
       
-  } else if (text.match(/codec:/)) {
-      result_message = executeCodec(text.replace("codec:", "").trim());
+  } else if (text.match(/codic:/)) {
+      result_message = executeCodic(text.replace("codic:", "").trim());
+      message = "<@" + e.parameter.user_name + ">\n" + result_message;
+      
+  } else if (text.match(/chkshuho:/)) {
+      result_message = checkReport('weekly_reports', text.replace("chkshuho:", "").trim());
+      message = "<@" + e.parameter.user_name + ">\n" + result_message;
+      
+  } else if (text.match(/chkgeppo:/)) {
+      result_message = checkReport('monthly_reports', text.replace("chkgeppo:", "").trim());
       message = "<@" + e.parameter.user_name + ">\n" + result_message;
       
   } else if (text.match(/dice:/)) {
@@ -63,7 +71,9 @@ function doPost(e) {
       message = "<@" + e.parameter.user_name + ">\n"
         + '現在使用できるコマンドは以下になります。\n'
         + '[ weather: ] 千代田区の天気を教えてくれます。\n'
-        + '[ codec:(文字列) ] (文字列)をプログラムでよく使用される英単語に変換してくれます。\n'
+        + '[ codic:(文字列) ] (文字列)をプログラムでよく使用される英単語に変換してくれます。\n'
+        + '[ chkshuho: ] 週報の未提出者を確認します。\n'
+        + '[ chkgeppo: ] 月報の未提出者を確認します。\n'
         + '[ dice: ] サイコロを振ってくれます。\n'
         + '[ iine:(@名前) ] (@名前)を褒めてくれます。\n'
         + '[ waruine:(@名前) ] (@名前)を貶してくれます。\n'

@@ -1,4 +1,4 @@
-function executeCodec(message) {
+function executeCodic(message) {
 
   if (message.length <= 0) message = '変換';
 
@@ -22,7 +22,7 @@ function executeCodec(message) {
   Logger.log("message: " + message);
   Logger.log("translated_text: " + json[0]["translated_text"]);
   
-  converted_message = " [ ##message## ] の翻訳結果は [##translated_text##] です。\n他の選択肢として\n##candidates##があります。";
+  converted_message = " [ ##message## ] の翻訳結果は [##translated_text##] です。\n候補として\n##candidates##があります。";
   converted_message = converted_message
     .replace('##message##', message)
     .replace('##translated_text##', json[0]["translated_text"]);
