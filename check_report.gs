@@ -17,7 +17,8 @@ function checkReport(sheet_name, message) {
   
   var head_col = 1;
   
-  var export_message = '現時点で提出を検知していないのは以下の方々です。\n\n';
+  var export_message = '';
+  
 
   // =============================
   // シートから提出状況を取得

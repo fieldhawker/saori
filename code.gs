@@ -28,46 +28,54 @@ function doPost(e) {
       message = "<@" + e.parameter.user_name + ">\n" + "ガッ";
       
   } else if (text.match(/weather:/)) {
-      result_message = getWeather();
+      var result_message = getWeather();
       message = "<@" + e.parameter.user_name + ">\n" + result_message;
       
   } else if (text.match(/codic:/)) {
-      result_message = executeCodic(text.replace("codic:", "").trim());
+      var result_message = executeCodic(text.replace("codic:", "").trim());
       message = "<@" + e.parameter.user_name + ">\n" + result_message;
       
   } else if (text.match(/chkshuho:/)) {
-      result_message = checkReport('weekly_reports', text.replace("chkshuho:", "").trim());
-      message = "<@" + e.parameter.user_name + ">\n" + result_message;
+      var prefix = '現時点で提出を検知していないのは以下の方々です。\n\n';
+      var result_message = checkReport('weekly_reports', text.replace("chkshuho:", "").trim());
+      
+      if (result_message.length <= 0) result_message = '全員の提出を確認しました！お疲れ様です！';
+  
+      message = "<@" + e.parameter.user_name + ">\n" + prefix + result_message;
       
   } else if (text.match(/chkgeppo:/)) {
-      result_message = checkReport('monthly_reports', text.replace("chkgeppo:", "").trim());
-      message = "<@" + e.parameter.user_name + ">\n" + result_message;
+      var prefix = '現時点で提出を検知していないのは以下の方々です。\n\n';
+      var result_message = checkReport('monthly_reports', text.replace("chkgeppo:", "").trim());
+      
+      if (result_message.length <= 0) result_message = '全員の提出を確認しました！お疲れ様です！';
+      
+      message = "<@" + e.parameter.user_name + ">\n" + prefix + result_message;
       
   } else if (text.match(/dice:/)) {
-      result_message = executeDice(text.replace("dice:", "").trim());
+      var result_message = executeDice(text.replace("dice:", "").trim());
       message = "<@" + e.parameter.user_name + ">\n" + result_message;
       
   } else if (text.match(/iine:/)) {
-      result_message = getIine(text.replace("iine:", "").trim());
+      var result_message = getIine(text.replace("iine:", "").trim());
       message = result_message;
       
   } else if (text.match(/waruine:/)) {
-      result_message = getWaruine(text.replace("waruine:", "").trim());
+      var result_message = getWaruine(text.replace("waruine:", "").trim());
       message = result_message;
        
   } else if (text.match(/image:/)) {
-      result_message = getSearchImage(text.replace("image:", "").trim());
+      var result_message = getSearchImage(text.replace("image:", "").trim());
       message = "<@" + e.parameter.user_name + ">\n" + result_message;
       
   } else if (text.match(/talk:/)) {
-      result_message = getDialogueMessage(text.replace("talk:", "").trim());
+      var result_message = getDialogueMessage(text.replace("talk:", "").trim());
       message = "<@" + e.parameter.user_name + ">\n" + result_message;
       
   } else if (text.match(/21:/)) {
-      result_message = "https://script.google.com/macros/s/AKfycbwI7Ye7jN-Fi82zHcXcLG80tDn7n8fcgcCWmiIRnlePe9PgN6Q1/exec";
+      var result_message = "https://script.google.com/macros/s/AKfycbwI7Ye7jN-Fi82zHcXcLG80tDn7n8fcgcCWmiIRnlePe9PgN6Q1/exec";
       message = "<@" + e.parameter.user_name + ">\n" + result_message;
       
-  } else if (text.match(/help:/)) {
+  } else if (text.match(/help:/) || (text.length <= 0)) {
       message = "<@" + e.parameter.user_name + ">\n"
         + '現在使用できるコマンドは以下になります。\n'
         + '[ weather: ] 千代田区の天気を教えてくれます。\n'
@@ -81,6 +89,8 @@ function doPost(e) {
         + '[ talk:(文字列) ] (文字列)でBOTに話しかけます。\n'
         + '[ 21: ] 二課１ＧのポータルサイトＵＲＬをお知らせします。\n'
         + '[ help: ] 使用可能なコマンドが確認できます。\n'
+        + '\n'
+        + '※パブリックチャンネルを対象として稼働しています。\n'
       ;
   } else {
       message = e.parameter.user_name + "さんは「" + text + "」と言っています。";  
