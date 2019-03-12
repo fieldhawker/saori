@@ -96,7 +96,8 @@ function doPost(e) {
       message = e.parameter.user_name + "さんは「" + text + "」と言っています。";  
   }
   
-  Logger.log("channel_id: " + e.parameter.channel_id);
+  
+  Logger.log("token: " + e.parameter.channel_id);
   
   return app.postMessage(e.parameter.channel_id, message, {
     username: bot_name,

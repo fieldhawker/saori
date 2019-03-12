@@ -7,7 +7,7 @@ function sendReportResult(sheet_name, template_row) {
   var response_hook_event = "not_submitters_mail";
   
 //  var mailto = 'fieldhawker@gmail.com';
-  var mailto = 'matsushige@se-project.co.jp,izumi@se-project.co.jp,takano@se-project.co.jp,nakamurashinya@se-project.co.jp,machidatakahiro@se-project.co.jp,takenagakota@se-project.co.jp,naruseyuki@se-project.co.jp,takahashi@se-project.co.jp,takayama@se-project.co.jp';
+  var mailto = 'izumi@se-project.co.jp,takano@se-project.co.jp,nakamurashinya@se-project.co.jp,konnochikara@se-project.co.jp,takiminaohiro@se-project.co.jp,takahashi@se-project.co.jp,takayama@se-project.co.jp';
   var mailtitle = '[SEP][二課１G] 週報の提出状況の共有';
   
   var staff_message = checkReport(sheet_name, '');

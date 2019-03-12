@@ -13,7 +13,7 @@ function checkReport(sheet_name, message) {
   var name_rownum   = 2;
   var tel_rownum    = 3;
   var email_rownum  = 4;
-  var result_rownum = 5;  // 済と入力する行番号
+  var result_rownum = 6;  // 済と入力する行番号
   
   var head_col = 1;
   
